@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice #{invoice_no}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .invoice-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .invoice-header {
+            background: linear-gradient(135deg, #ed427b 0%, #d63968 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .company-logo {
+            max-height: 80px;
+            max-width: 200px;
+            margin-bottom: 20px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .invoice-title {
+            font-size: 2.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .invoice-subtitle {
+            font-size: 1.0em;
+            opacity: 0.9;
+        }
+        
+        .invoice-body {
+            padding: 20px;
+        }
+        
+        .invoice-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 900px) {
+            .invoice-info {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .invoice-info {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
+        .info-section {
+            background: #faf1f3;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #ed427b;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-section h3 {
+            color: #d63968;
+            margin-bottom: 10px;
+            font-size: 1.0em;
+            border-bottom: 2px solid #f2d1db;
+            padding-bottom: 5px;
+        }
+        
+        .info-item {
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 3px;
+            font-size: 0.85em;
+        }
+        
+        .info-value {
+            color: #333;
+            line-height: 1.5;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+        
+        .invoice-details {
+            margin-top: 20px;
+        }
+        
+        .details-title {
+            color: #d63968;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 3px solid #ed427b;
+        }
+        
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .items-table th {
+            background: #ed427b;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85em;
+        }
+        
+        .items-table td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9em;
+        }
+        
+        .items-table tbody tr:hover {
+            background-color: #faf1f3;
+            transition: background-color 0.3s ease;
+        }
+        
+        .items-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .total-section {
+            margin-top: 20px;
+            background: #faf1f3;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #ed427b;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .total-row:last-child {
+            border-bottom: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #d63968;
+            background: white;
+            padding: 10px;
+            margin: 8px -15px -15px -15px;
+            border-radius: 0 0 6px 6px;
+        }
+        
+        .payment-method {
+            margin-top: 15px;
+            text-align: center;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #ed427b 0%, #d63968 100%);
+            color: white;
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .payment-method h3 {
+            margin: 0;
+            font-size: 0.9em;
+            font-weight: normal;
+        }
+        
+        .payment-value {
+            font-size: 0.9em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .policy-section {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff8f9;
+            border: 1px solid #f2d1db;
+            border-radius: 8px;
+            font-size: 0.75em;
+            line-height: 1.3;
+            color: #555;
+        }
+        
+        .policy-section h4 {
+            color: #d63968;
+            margin-bottom: 6px;
+            font-size: 1.0em;
+            font-weight: bold;
+        }
+        
+        .policy-text {
+            text-align: justify;
+            margin-bottom: 8px;
+        }
+        
+        .policy-highlight {
+            font-weight: bold;
+            color: #d63968;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 10px;
+            color: #666;
+            font-style: italic;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+            font-size: 0.8em;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            
+            .invoice-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <img src="decornate.png" alt="Decornate Logo" class="company-logo">
+            <div class="invoice-title">decornate</div>
+        </div>
+        
+        <div class="invoice-body">
+            <div class="invoice-info">
+                <div class="info-section">
+                    <h3>Invoice Details</h3>
+                    <div class="info-item">
+                        <span class="info-label">Invoice No:</span>
+                        <span class="info-value">#{invoice_no}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Date:</span>
+                        <span class="info-value">{date}</span>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h3>Bill To</h3>
+                    <div class="info-item">
+                        <span class="info-label">Name:</span>
+                        <span class="info-value">{bill_to}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Contact:</span>
+                        <span class="info-value">{contact_no}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Address:</span>
+                        <span class="info-value">{billing_address}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="invoice-details">
+                <h2 class="details-title">Invoice Items</h2>
+                
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-right">Unit Price</th>
+                            <th class="text-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {items_rows}
+                    </tbody>
+                </table>
+                
+                <div class="total-section">
+                    <div class="total-row">
+                        <span><strong>Total Amount:</strong></span>
+                        <span><strong>${total_bill}</strong></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payment-method">
+                <h3>Payment Method</h3>
+                <div class="payment-value">{payment_method}</div>
+            </div>
+            
+            <div class="policy-section">
+                <h4>Important Policy Information</h4>
+                <p class="policy-text">
+                    <span class="policy-highlight">We humbly request you to inspect your product at the time of delivery, in the presence of the delivery person.</span> 
+                    If you notice any issues such as wrong size, defects, or damage, please return the item immediately to the delivery person. 
+                    <span class="policy-highlight">Kindly note that once the delivery is completed and the delivery person has left, we will not be able to process any return, exchange, or refund.</span>
+                </p>
+                <p class="policy-text">
+                    We truly value your trust and understanding, and we're always here to serve you better.
+                </p>
+            </div>
+            
+            <div class="footer">
+                <p>Thank you for your business!</p>
+                <p>Generated on {date}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

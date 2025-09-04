@@ -1,0 +1,6 @@
+invoice_no,date,bill_to,contact_no,billing_address,product,quantity,price,total_bill,payment_method,status
+INV-001,2025-09-01,John Smith,+1-555-0123,"123 Main St, New York, NY 10001","Web Development|Hosting Services",2|12,500.00|25.00,1300.00,Credit Card,Paid
+INV-002,2025-09-02,Sarah Johnson,+1-555-0456,"456 Oak Ave, Los Angeles, CA 90210","Logo Design|Business Cards",1|500,800.00|2.50,2050.00,PayPal,Pending
+INV-003,2025-09-03,Michael Brown,+1-555-0789,"789 Pine St, Chicago, IL 60601","Mobile App Development|Testing Services",1|40,2500.00|75.00,5500.00,Bank Transfer,Paid
+INV-004,2025-09-04,Emily Davis,+1-555-0321,"321 Elm St, Houston, TX 77001","SEO Optimization|Content Writing",3|10,300.00|50.00,2400.00,Credit Card,Overdue
+INV-005,2025-09-05,Robert Wilson,+1-555-0654,"654 Maple Dr, Phoenix, AZ 85001","Database Design|API Development",1|20,1200.00|150.00,4200.00,Check,Paid
