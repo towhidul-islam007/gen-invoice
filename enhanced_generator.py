@@ -4,15 +4,15 @@ Enhanced Invoice Generator
 A modern, feature-rich invoice generation system with improved design and functionality.
 """
 
+import configparser
 import csv
-import os
 import json
 import logging
-from pathlib import Path
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any
+import os
 from dataclasses import dataclass
-import configparser
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
 try:
     import weasyprint
@@ -286,6 +286,20 @@ class EnhancedInvoiceGenerator:
 
                         if pdf_path:
                             results["generated_pdfs"].append(pdf_path)
+
+                            # Delete the preview HTML file after successful PDF generation
+                            try:
+                                os.remove(preview_path)
+                                self.logger.info(
+                                    f"Deleted preview file: {os.path.basename(preview_path)}"
+                                )
+                                # Remove from results since it's deleted
+                                if preview_path in results["generated_previews"]:
+                                    results["generated_previews"].remove(preview_path)
+                            except Exception as e:
+                                self.logger.warning(
+                                    f"Could not delete preview file {preview_path}: {e}"
+                                )
 
                     except Exception as e:
                         error_msg = f"Error processing row {row_num}: {e}"
