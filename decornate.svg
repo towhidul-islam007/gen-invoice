@@ -33,7 +33,7 @@
   </text>
   
   <!-- Tagline -->
-  <text x="72" y="52" font-family="'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="350" fill="#6b7280" letter-spacing="2px">
+  <text x="72" y="52" font-family="'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="350" fill="#4f5561ff" letter-spacing="2px">
     minimal shopping
   </text>
   
