@@ -142,8 +142,8 @@ class EnhancedInvoiceGenerator:
                         <tr>
                             <td class="product-name">{item.product}</td>
                             <td class="text-center">{item.quantity}</td>
-                            <td class="text-right font-mono">${item.price:.2f}</td>
-                            <td class="text-right font-mono">${item.total:.2f}</td>
+                            <td class="text-right font-mono">৳{item.price:.2f}</td>
+                            <td class="text-right font-mono">৳{item.total:.2f}</td>
                         </tr>"""
         return rows_html
 
@@ -178,15 +178,16 @@ class EnhancedInvoiceGenerator:
         # Replace placeholders
         replacements = {
             "{invoice_no}": invoice_data.invoice_no,
+            "{generated_date}": datetime.now().strftime("%Y-%m-%d"),
             "{date}": invoice_data.date,
             "{due_date}": due_date,
             "{bill_to}": invoice_data.bill_to,
             "{contact_no}": invoice_data.contact_no,
             "{billing_address}": invoice_data.billing_address,
             "{items_rows}": items_html,
-            "{subtotal}": f"{invoice_data.subtotal:.2f}",
-            "{tax_amount}": f"{invoice_data.tax_amount:.2f}",
-            "{total_bill}": f"{invoice_data.total_amount:.2f}",
+            "{subtotal}": f"৳{invoice_data.subtotal:.2f}",
+            "{tax_amount}": f"৳{invoice_data.tax_amount:.2f}",
+            "{total_bill}": f"৳{invoice_data.total_amount:.2f}",
             "{payment_method}": invoice_data.payment_method,
             "{status}": invoice_data.status,
             "__status_color__": status_color,
